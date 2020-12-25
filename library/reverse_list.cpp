@@ -5,12 +5,6 @@ using vi = vector<int>;
 using vvi = vector<vi>;
 #define rep(i, n) for (int i = 0; i < (int) (n); i++)
 #define repi(i, n) for (int i = 1; i <= (int) (n); i++)
-#define vin(T) for (auto& x: T) cin >> x
-#define all(x) x.begin(), x.end()
-#define rall(x) x.rbegin(), x.rend()
-#define pq(T) priority_queue<T, vector<T>, greater<T>>
-template<class T> void chmin(T &a, const T &b) { if (a > b) a = b; }
-template<class T> void chmax(T &a, const T &b) { if (a < b) a = b; }
 template<class T> void print(const T &t) { cout << t << "\n"; }
 const ll INF = 1LL << 60;
 
@@ -45,3 +39,4 @@ int main() {
     if (!solve(0, ans)) print(-1);
     else for (auto &x: ans) print(x);
 }
+//Exoswap
