@@ -6,8 +6,6 @@ using namespace std;
 using ll = long long;
 using vi = vector<int>;
 using vl = vector<ll>;
-using vp = vector<pair<int, int>>;
-using vvp = vector<vp>;
 using vvi = vector<vi>;
 using vm = vector<mint>;
 using vvm = vector<vm>;
@@ -16,9 +14,6 @@ using vvm = vector<vm>;
 #define fore(i_in, a) for (auto& i_in: a)
 #define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
-#define pq(T) priority_queue<T, vector<T>, greater<T>>
-template<class T> void chmin(T &a, const T &b) { if (a > b) a = b; }
-template<class T> void chmax(T &a, const T &b) { if (a < b) a = b; }
 template<class T> void print(const T &t) { cout << t << "\n"; }
 
 int n; vvi E;
