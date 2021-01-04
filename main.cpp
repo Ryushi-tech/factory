@@ -1,10 +1,10 @@
 #include<bits/stdc++.h>
 using namespace std;
 using ll = long long;
+using pii = pair<int, int>;
 using vi = vector<int>;
 using vl = vector<ll>;
-using vp = vector<pair<int, int>>;
-using vvp = vector<vp>;
+using vp = vector<pii>;
 using vvi = vector<vi>;
 #define rep(i, a, b) for (int i = a; i < (int) (b); i++)
 #define rrep(i, a, b) for (int i = a; i >= (int) (b); i--)
