@@ -1,7 +1,7 @@
 #!/bin/zsh
 
-contest=arc
-num=111
+contest=abc
+num=188
 
 home=/Users/ryushi/CLionProjects/factory/
 base=https://atcoder.jp/contests/${contest}${num}/tasks/${contest}${num}_
