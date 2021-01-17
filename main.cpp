@@ -16,32 +16,28 @@ using vvl = vector<vl>;
 #define rall(x) x.rbegin(), x.rend()
 #define pq(T) priority_queue<T, vector<T>, greater<T>>
 #define fio() cin.tie(nullptr);ios::sync_with_stdio(false);
+#define CEIL(a, b) (a+b-1)/b;
+#define offset_FLOOR(a, b) (a-1)/b;
 #define DEBUG(x) cerr<<#x<<": "<<x<<endl;
-#define DEBUG_VEC(v) cerr<<#v<<":";for(int i=0;i<v.size();i++) cerr<<" "<<v[i]; cerr<<endl
+#define DEBUG_VEC(v) cerr<<#v<<":";for(int i=0;i<(int)v.size();i++) cerr<<" "<<v[i]; cerr<<endl
 #define UNIQUE(v) v.erase(std::unique(v.begin(), v.end()), v.end());
-template<class T> bool chmax(T &a, const T &b) {if (a<b) { a = b; return 1; } return 0;}
-template<class T> bool chmin(T &a, const T &b) {if (a>b) { a = b; return 1; } return 0;}
+template<class T> bool chmax(T &a, const T &b) {if (a<b) { a = b; return true; } return 0;}
+template<class T> bool chmin(T &a, const T &b) {if (a>b) { a = b; return true; } return 0;}
 template<class T> void print(const T &t) { cout << t << "\n"; }
 
-#include<atcoder/all>
-using namespace atcoder;
-using mint = modint1000000007;
-
-ll n, k;
-ml dic;
+const ll infl = 1e10;
+ll n, m, a, b, ans=-infl;
+vl A(200200),dp(200200, infl);
+vvl E(200200);
 
 int main() {
-    fio(); cin>>n;
-    rep(i,n) {cin>>k; dic[k]++;}
-    for (int i = 1 - (n&1); i < n; i+=2) {
-        if (i == 0 and dic[i] != 1) {
-            print(0); return 0;
-        }
-        else if (i != 0 and dic[i] != 2) {
-            print(0); return 0;
-        }
+    fio(); cin>>n>>m;
+    rep(i, n) cin>>A[i];
+    rep(i, m) {
+        cin>>a>>b;a--;b--;
+        E[a].push_back(b);
     }
-    mint base = 2;
-    mint ans = base.pow(n/2);
-    print(ans.val());
+    rep(v, n) fore(to, E[v]) chmin(dp[to], min(dp[v], A[v]));
+    rep(i, n) chmax(ans, A[i]-dp[i]);
+    print(ans);
 }
