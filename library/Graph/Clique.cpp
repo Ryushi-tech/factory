@@ -25,37 +25,23 @@ template<class T> bool chmax(T &a, const T &b) {if (a<b) { a = b; return true; }
 template<class T> bool chmin(T &a, const T &b) {if (a>b) { a = b; return true; } return 0;}
 template<class T> void print(const T &t) { cout << t << "\n"; }
 
-int n, m;
-vl W; vp VL0;
-ll w, l, v;
+int n, m, a, b;
+int E[20];
 
 int main() {
     fio(); cin>>n>>m;
-    rep(i,n) {cin>>w; W.emplace_back(w);}
-    sort(all(W));
     rep(i,m) {
-        cin>>l>>v;
-        if (v < W.back()) {print(-1); return 0;}
-        VL0.emplace_back(v, l);
+        cin>>a>>b;a--;b--;
+        E[a] |= 1<<b;
+        E[b] |= 1<<a;
     }
-    sort(all(VL0));
-    vp VL;
-    VL.emplace_back(0, 0);
-    for(auto& [v, l] : VL0){
-        if(VL.size() && VL.back().second >= l) continue;
-        VL.emplace_back(v, l);
+    vector<int> P(1<<n,0x3fffffff);
+    P[0]=1;
+    rep(mask, 1<<n) rep(i,n) {
+            if ((E[i] & mask) == mask and P[mask] == 1) P[mask | 1 << i] = 1;
     }
-    ll ans=1LL<<30;
-
-    do {
-        vl dp(n), S(n + 1);
-        rep(i, n) S[i + 1] = S[i] + W[i];
-        rep(i, n - 1) for (int j = i + 1; j < n; j++) {
-                int itr = lower_bound(all(VL), make_pair(S[j + 1] - S[i],1LL)) - VL.begin() - 1;
-                ll d = VL[itr].second;
-                chmax(dp[j], dp[i] + d);
-            }
-        chmin(ans, dp[n - 1]);
-    } while (next_permutation(all(W)));
-    print(ans);
+    rep(mask,1<<n) for(int sub=mask; sub>0; sub=(sub-1)&mask) {
+            chmin(P[mask], P[sub]+P[sub^mask]);
+        }
+    print(P[(1<<n)-1]);
 }
