@@ -1,7 +1,7 @@
 #!/bin/zsh
 
-contest=keyence
-num=2021
+contest=abc
+num=189
 
 home=/Users/ryushi/CLionProjects/factory/
 base=https://atcoder.jp/contests/${contest}${num}/tasks/${contest}${num}_

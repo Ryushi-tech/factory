@@ -26,37 +26,27 @@ template<class T> bool chmax(T &a, const T &b) {if (a<b) { a = b; return true; }
 template<class T> bool chmin(T &a, const T &b) {if (a>b) { a = b; return true; } return 0;}
 template<class T> void print(const T &t) { cout << t << "\n"; }
 
-#include<atcoder/all>
-using namespace atcoder;
-using mint = modint1000000007;
-using msm = map<string, mint>;
-
-int n;
-vector<msm> dp(101);
-string C = "AGCT";
-
-bool ok(string l4) {
-    rep(i,4) {
-        string tmp = l4;
-        if (i!=3) swap(tmp[i], tmp[i+1]);
-        if (int(tmp.find("AGC")) != -1) return false;
-    }
-    return true;
-};
-
-mint dfs(int cur, string l3) {
-    if (dp[cur][l3]!=0) return dp[cur][l3];
-    if (cur == n) return 1;
-    mint res = 0;
-    fore(c, C) {
-        if (ok(l3 + c)) res += dfs(cur + 1, l3.substr(1,2) + c);
-    }
-    dp[cur][l3] = res;
-    return res;
-};
+int n; ll k;
+vvl dp(41, vl(2, -1));
 
 int main() {
-    fio(); cin>>n;
-    mint ans = dfs(0, "THX");
-    print(ans.val());
+    fio(); cin>>n>>k;
+    vl A(n); rep(i,n) cin>>A[i];
+    dp[40][0] = 0;
+    rrep(d, 40){
+        ll msk = 1LL << d;
+        int ones = 0;
+        rep(i,n) if(A[i] & msk) ones++;
+        int zeros = n - ones;
+        if (k & msk) {
+            chmax(dp[d][0], dp[d+1][0] + zeros * msk);
+            chmax(dp[d][1], dp[d+1][0] + ones * msk);
+        }
+        else {
+            chmax(dp[d][0], dp[d+1][0] + ones * msk);
+        }
+        if (dp[d+1][1] > -1) chmax(dp[d][1], dp[d+1][1] + max(zeros, ones) * msk);
+    }
+    ll ans = max(dp[0][0], dp[0][1]);
+    print(ans);
 }
