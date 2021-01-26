@@ -15,48 +15,52 @@ using vvl = vector<vl>;
 #define forp(x,y,a) for(auto& [x, y]: a)
 #define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
-#define pq(T) priority_queue<T, vector<T>>
+#define pq(T) priority_queue<T, vector<T>, greater<T>>
 #define fio() cin.tie(nullptr);ios::sync_with_stdio(false);
 #define CEIL(a, b) (a+b-1)/b;
 #define offset_FLOOR(a, b) (a-1)/b;
 #define DEBUG(x) cerr<<#x<<": "<<x<<endl;
 #define DEBUG_VEC(v) cerr<<#v<<":";for(int i=0;i<(int)v.size();i++) cerr<<" "<<v[i]; cerr<<endl
-#define UNIQUE(v) v.erase(unique(all(v)), v.end());
+#define UNIQUE(v) v.erase(std::unique(v.begin(), v.end()), v.end());
 template<class T> bool chmax(T &a, const T &b) {if (a<b) { a = b; return true; } return 0;}
 template<class T> bool chmin(T &a, const T &b) {if (a>b) { a = b; return true; } return 0;}
 template<class T> void print(const T &t) { cout << t << "\n"; }
 
-ll n, k, t, d;
-const ll inf = 1LL<<40;
+int n,m,q,a,b;
+vector<vector<ll>> VX, VY;
 
 int main() {
-    fio(); cin>>n>>k;
-    vvl sushi(n);
-    rep(i,n) {
-        cin>>t>>d;t--;
-        sushi[t].emplace_back(d);
-    }
-    fore(v, sushi) {
-        sort(rall(v));
-        if(v.empty()) v.emplace_back(-inf);
-    }
-    sort(all(sushi), [&](vl a, vl b) {return a[0] > b[0];});
-
-    pq(ll) que; ll cur=0;
-    rep(i,k) {
-        cur += sushi[i][0];
-        rep1(j,sushi[i].size()-1) que.push(sushi[i][j]);
-    }
-    for(int i = k; i<n ; i++) rep(j,sushi[i].size()) que.push(sushi[i][j]);
-    ll res = cur + k*k;
-    for(ll x=k-1; x>=1; x--) {
-        ll v = sushi[x][0];
-        ll w = que.top();
-        if(v < w) {
-            que.pop(); cur += w;
-            que.push(v); cur -= v;
+    fio(); cin>>n;
+    vector<int> X(n), Y(n); rep(i,n) cin>>X[i]>>Y[i];
+    VX.push_back({1,0,0}); VY.push_back({0,1,0});
+    cin>>m; rep(i,m) {
+        int x; cin>>x;
+        vector<ll> vx = VX.back();
+        vector<ll> vy = VY.back();
+        if (x==1) {
+            swap(vx,vy);
+            rep(j,3) vy[j] *= -1;
         }
-        chmax(res, cur + x*x);
+        else if (x==2) {
+            swap(vx,vy);
+            rep(j,3) vx[j] *= -1;
+        }
+        else if (x==3) {
+            ll p; cin>>p;
+            rep(j,3) vx[j] *= -1;
+            vx[2] += 2 * p;
+        }
+        else {
+            ll p; cin>>p;
+            rep(j,3) vy[j] *= -1;
+            vy[2] += 2 * p;
+        }
+        VX.push_back(vx); VY.push_back(vy);
     }
-    print(res);
+    cin>>q; rep(i,q) {
+        cin>>a>>b; b--;
+        ll ansx = VX[a][0]*X[b] + VX[a][1]*Y[b] + VX[a][2];
+        ll ansy = VY[a][0]*X[b] + VY[a][1]*Y[b] + VY[a][2];
+        cout << ansx << " " << ansy << "\n";
+    }
 }
