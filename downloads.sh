@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 contest=abc
-num=189
+num=190
 
 home=/Users/ryushi/CLionProjects/factory/
 base=https://atcoder.jp/contests/${contest}${num}/tasks/${contest}${num}_

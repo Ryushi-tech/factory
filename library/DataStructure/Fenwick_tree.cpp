@@ -23,10 +23,23 @@ template<class T> bool chmax(T &a, const T &b) {if (a<b) { a = b; return true; }
 template<class T> bool chmin(T &a, const T &b) {if (a>b) { a = b; return true; } return 0;}
 template<class T> void print(const T &t) { cout << t << "\n"; }
 
-ll n, d, x, a, ans;
+#include<atcoder/all>
+using namespace atcoder;
+
+ll n;
 
 int main() {
-    fio(); cin>>n>>d>>x;
-    rep(i,n) {cin>>a; ans += 1+(d-1)/a;}
-    print(ans+x);
+    fio(); cin>>n;
+    fenwick_tree<ll> bit(n+1);
+    vl A(n);
+    rep(i,n) cin>>A[i];
+    ll res = 0;
+    rep(i,n) {
+        res += bit.sum(A[i], n);
+        bit.add(A[i], 1);
+    }
+    rep(i,n) {
+        print(res);
+        res = res + (n - 1) - 2 * A[i];
+    }
 }

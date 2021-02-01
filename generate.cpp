@@ -23,10 +23,16 @@ template<class T> bool chmax(T &a, const T &b) {if (a<b) { a = b; return true; }
 template<class T> bool chmin(T &a, const T &b) {if (a>b) { a = b; return true; } return 0;}
 template<class T> void print(const T &t) { cout << t << "\n"; }
 
-ll n, d, x, a, ans;
+int main(){
+    random_device seed_gen;
+    mt19937_64 rnd(seed_gen());
 
-int main() {
-    fio(); cin>>n>>d>>x;
-    rep(i,n) {cin>>a; ans += 1+(d-1)/a;}
-    print(ans+x);
+    uniform_int_distribution<int> dist_N(4, 10), dist_A(1, 20);
+    int n = dist_N(rnd);
+    vector<int> A(n);
+    rep(i,n) A[i] = dist_A(rnd);
+
+    cout << n << endl;
+    rep(i,n) cout << A[i] << " \n"[i==n-1];
+    return 0;
 }

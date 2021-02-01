@@ -23,10 +23,15 @@ template<class T> bool chmax(T &a, const T &b) {if (a<b) { a = b; return true; }
 template<class T> bool chmin(T &a, const T &b) {if (a>b) { a = b; return true; } return 0;}
 template<class T> void print(const T &t) { cout << t << "\n"; }
 
-ll n, d, x, a, ans;
+ll n;
 
 int main() {
-    fio(); cin>>n>>d>>x;
-    rep(i,n) {cin>>a; ans += 1+(d-1)/a;}
-    print(ans+x);
+    fio(); cin>>n;
+    ll x; ll y=n;
+    while(y > 0) {
+        x += y % 10;
+        y /= 10;
+    }
+    print(n % x == 0 ? "Yes" : "No");
 }
+
