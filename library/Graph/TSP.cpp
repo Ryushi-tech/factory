@@ -65,10 +65,10 @@ int main() {
 
     rep(s, k2) {
         rep(i,k) if(s >> i & 1) {
-            rep(j,k) if(~s >> j & 1) {
-                chmin(dp[s|1 << j][j], dp[s][i] + g[i][j]);
+                rep(j,k) if(~s >> j & 1) {
+                        chmin(dp[s|1 << j][j], dp[s][i] + g[i][j]);
+                    }
             }
-        }
     }
 
     ll ans = *min_element(all(dp[k2 - 1]));
