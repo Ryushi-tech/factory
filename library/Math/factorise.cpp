@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-using ll = ll;
+using ll = long long;
 using pii = pair<int, int>;
 using pll = pair<ll, ll>;
 using vi = vector<int>;
@@ -18,18 +18,10 @@ template<class T> void chmax(T &a, const T &b) { if (a < b) a = b; }
 template<class T> void print(const T &t) { cout << t << "\n"; }
 const ll INF = 1LL << 60;
 
-vector<pll> > prime_factorize(ll N) {
-    vector<pll> res;
-    for (ll a = 2; a * a <= N; ++a) {
-        if (N % a != 0) continue;
-        ll ex = 0;
-        while (N % a == 0) {
-            ++ex;
-            N /= a;
-        }
-        res.push_back({a, ex});
-    }
-    if (N != 1) res.push_back({N, 1});
+template <class Z> map<Z, int> factorize(Z n) {
+    map<Z, int> res;
+    for (Z i = 2; i * i <= n; ++i) while (n % i == 0) ++res[i], n /= i;
+    if (n != 1) ++res[n];
     return res;
 }
 

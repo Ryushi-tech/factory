@@ -23,15 +23,33 @@ template<class T> bool chmax(T &a, const T &b) {if (a<b) { a = b; return true; }
 template<class T> bool chmin(T &a, const T &b) {if (a>b) { a = b; return true; } return 0;}
 template<class T> void print(const T &t) { cout << t << "\n"; }
 
-int main() {
-    fio(); long double x,y,r; cin>>x>>y>>r;
-    ll ans = 0;
-    r = nextafter(r, INFINITY);
-    ll start = ceil(x-r), end = floor(x+r);
-    for(ll i=start; i<=end; i++) {
-        long double p = sqrt(pow(r,2)-pow(x-i,2));
-        ll bottom = ceil(y-p), top = floor(y+p);
-        ans += top - bottom + 1;
+
+template<class T> struct CumulativeSum2D{
+    vector<vector<T>> data;
+    CumulativeSum2D(int H, int W): data(H+1, vector<T>(W+1, 0)){}
+    void add(int y, int x, ll value){
+        ++x; ++y;
+        if(y >= (int) data.size() || x >= (int) data[0].size()) return;
+        data[y][x] += value;
     }
-    print(ans);
+    void build(){
+        int h = (int) data.size() - 1, w = (int) data[0].size() - 1;
+        rep(i,h) rep(j,w) data[i+1][j+1] += data[i][j+1] + data[i+1][j] - data[i][j];
+    }
+    ll query(int sy, int sx, int gy, int gx){
+        return data[gy][gx] - data[sy][gx] - data[gy][sx] + data[sy][sx];
+    }
+};
+
+int main(){
+    cin.tie(0);
+    ios::sync_with_stdio(false);
+
+    int h,w,k; cin >> h >> w >> k;
+    vector<string> s(h); rep(i,h) cin >> s[i];
+
+    CumulativeSum2D<ll> acu(h,w);
+    rep(i,h) rep(j,w) if(s[i][j] == '1') acu.add(i, j, 1);
+    acu.build();
+    rep(i,h) rep(j,w) cout << acu.query(1,2,i+1,j+1) << " \n"[j==w-1];
 }
