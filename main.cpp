@@ -15,23 +15,35 @@ using pl = pair<ll, ll>;
 #define rall(x) x.rbegin(), x.rend()
 #define pq(T) priority_queue<T, vector<T>, greater<T>>
 #define fio() cin.tie(nullptr);ios::sync_with_stdio(false);
-#define ofst_FLR(a, b) (a-1)/b;
 #define DEBUG(x) cerr<<#x<<": "<<x<<endl;
-#define DEBUG_VEC(v) cerr<<#v<<":";for(int i=0;i<(int)v.size();i++) cerr<<" "<<v[i]; cerr<<endl
+#define DEBUG_ANY(v) cerr<<#v<<":";for(auto itr=v.begin();itr!=v.end();itr++) cerr<<" "<<*itr; cerr<<endl
 #define UNIQUE(v) v.erase(unique(all(v)), v.end());
 template<class T> bool chmax(T &a, const T &b) {if (a<b) { a = b; return true; } return 0;}
 template<class T> bool chmin(T &a, const T &b) {if (a>b) { a = b; return true; } return 0;}
 template<class T> void print(const T &t) { cout << t << "\n"; }
 
+#include<atcoder/all>
+using namespace atcoder;
+
+int h, w;
+
 int main() {
-    fio(); long double x,y,r; cin>>x>>y>>r;
-    ll ans = 0;
-    r = nextafter(r, INFINITY);
-    ll start = ceil(x-r), end = floor(x+r);
-    for(ll i=start; i<=end; i++) {
-        long double p = sqrt(pow(r,2)-pow(x-i,2));
-        ll bottom = ceil(y-p), top = floor(y+p);
-        ans += top - bottom + 1;
-    }
+    fio(); cin>>h>>w;
+    vector<string> s(h);
+    rep(i,h) cin>>s[i];
+
+    s[0][0] = '#';
+    s[0][w-1] = '#';
+    s[h-1][0] = '#';
+    s[h-1][w-1] = '#';
+
+    dsu d(2020);
+    int thr = 1010;
+    rep(i,h) rep(j,w) if(s[i][j]=='#') d.merge(i, thr + j);
+
+    set<int> col, row;
+    rep(i,h) row.insert(d.leader(i));
+    rep(j,w) col.insert(d.leader(thr + j));
+    int ans = min(col.size(), row.size()) - 1;
     print(ans);
 }
