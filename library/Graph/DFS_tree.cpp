@@ -29,8 +29,8 @@ int main() {
     }
 
     int root = 0;
-    depth.assign(n, 0);
-    subtree_size.assign(n, 0);
-    dfs(G, root);
-    rep(i, n) cout << depth[i] << " " << subtree_size[i] << "\n";
+    depth.assign(n,0);
+    subtree_size.assign(n,0);
+    dfs(G,root);
+    rep(i,n) cout << depth[i] << " " << subtree_size[i] << "\n";
 }
