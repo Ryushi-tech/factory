@@ -21,7 +21,10 @@ const int iINF = 1 << 30;
 using pll = pair<ll,ll>;
 
 ll extgcd(ll a, ll b, ll &x, ll &y){
-    if(b==0){x=1; y=0; return a;}
+    if(b == 0){
+        x = 1, y = 0;
+        return a;
+    }
     ll xx, yy;
     ll d = extgcd(b, a%b, xx, yy);
     x = yy, y = xx-(a/b)*yy;
@@ -53,18 +56,43 @@ pll CRT(vl a, vl b, vl m){
     return make_pair(x,M);
 }
 
-ll a,b,p,x;
+ll n,m,k,c;
+vl a(5e5+500), b(5e5+500), p(1e6+100), q(1e6+100);
+vector<pll> res(1e6+100);
+
+bool check(ll x){
+    ll sum = 0;
+    rep1(i,c){
+            if(res[i].second == -1) continue;
+            sum += x / res[i].second;
+            if(res[i].first < x % res[i].second) sum++;
+    }
+    return x - sum >= k;
+}
 
 int main() {
-    fio(); cin>>a>>b>>p>>x;
-    ll an = 1, cnt = 0;
-    vl A={1,1}, M={p-1,p};
-    rep(i,p-1){
-        ll j = b * mod_inverse(an,p)%p;
-        vl B = {i,j};
-        pll c = CRT(A,B,M);
-        if(c.first <= x) cnt += 1 + (x-c.first)/c.second;
-        an = an * a % p;
+    fio(); cin>>n>>m>>k;
+    rep1(i,n) {cin>>a[i]; p[a[i]]=i;}
+    rep1(i,m) {cin>>b[i]; q[b[i]]=i;}
+
+    vl a={1,1}, M={n,m};
+    c = 2*max(n,m);
+    rep1(i,c) {
+        if(p[i] == 0 || q[i] == 0){
+            res[i].second = -1;
+            continue;
+        }
+        vl b = {p[i]%n-1, q[i]%m-1};
+        res[i] = CRT(a, b, M);
     }
-    print(cnt);
+
+    ll ub = INF, lb = 0, mid;
+    while(ub-lb>1){
+        mid = (ub+lb)/2;
+        if(check(mid)) ub = mid;
+        else lb = mid;
+    }
+    print(ub);
 }
+
+//https://codeforces.com/contest/1500/problem/B
