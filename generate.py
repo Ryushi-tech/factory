@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
 import random
-lim = pow(2, 6)
-n = random.randint(lim, lim)
+# lim = pow(2, 10)
+n = random.randint(2, 100)
+print(1)
+print(n)
 # m = random.randint(n, lim)
 # s = random.randint(1, n - 1)
 # t = random.randint(2, n)
@@ -26,7 +28,7 @@ n = random.randint(lim, lim)
     #     tmp = ["."] * x + ["#"] * (w - x)
     # random.shuffle(tmp)
     # print("".join(tmp))
-tmp1 = [x for x in range(n)]
+tmp1 = [x for x in range(1,n+1)]
 # tmp2 = [x for x in range(n)]
 random.shuffle(tmp1)
 # random.shuffle(tmp2)

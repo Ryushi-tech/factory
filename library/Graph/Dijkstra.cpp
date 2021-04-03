@@ -50,11 +50,11 @@ int main() {
     rep(i,m) {
         ll a,b,w; cin>>a>>b>>w;
         a--;b--;
-        G[a].push_back(Edge(b, w));
-        H[b].push_back(Edge(a, w));
+        G[a].emplace_back(b,w);
+        H[b].emplace_back(a,w);
     }
 
-    rep(s, n) {
+    rep(s,n) {
         vl dist = dijkstra(G, s);
         ll ans = INF;
         if(!H[s].empty()) fore(e, H[s]) chmin(ans, dist[e.to] + e.w);

@@ -1,12 +1,12 @@
 #include<bits/stdc++.h>
 using namespace std;
-using Graph = vector<vector<int>>;
 
 #define rep(i, n) for (int i = 0; i < (int) (n); i++)
 template<class T> void print(const T& t){ cout << t << "\n"; }
 
 vector<int> depth;
 vector<int> subtree_size;
+using Graph = vector<vector<int>>;
 
 void dfs(const Graph &G, int v, int p = -1, int d = 0) {
     depth[v] = d;

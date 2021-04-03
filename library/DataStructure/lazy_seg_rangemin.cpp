@@ -18,21 +18,34 @@ template<class T> void print(const T &t) { cout << t << "\n"; }
 const ll INF = 1LL << 62;
 const int iINF = 1 << 30;
 
-int n;
-using vi = vector<int>;
+#include<atcoder/all>
+using namespace atcoder;
 
-template<class T> int LIS(vector<T> a,  bool is_strong = true) {
-    const T lINF = iINF; int N = sz(a); vector<T> dp(N, lINF);
-    rep(i,N) {
-        if (is_strong) *lower_bound(all(dp), a[i]) = a[i];
-        else *upper_bound(all(dp), a[i]) = a[i];
-    }
-    return lower_bound(all(dp), lINF) - dp.begin();
-}
+int n,q;
+ll s,t,x,d;
+
+using S = int;
+using F = int;
+
+S op(S l, S r) { return min(l,r); }
+S e() { return iINF; }
+
+S mapping(F l, S r) { return min(l,r); }
+F composition(F l, F r) { return min(l,r); }
+F id() { return iINF; }
 
 int main() {
-    fio(); cin>>n;
-    vi a(n); fore(x,a) cin>>x;
-    reverse(all(a));
-    print(LIS(a,false));
+    fio(); cin>>n>>q;
+    vl s(n),t(n),x(n),d(q);
+    rep(i,n) cin>>s[i]>>t[i]>>x[i];
+    rep(i,q) cin>>d[i];
+    lazy_segtree<S, op, e, F, mapping, composition, id> seg(q);
+    rep(i,n){
+        ll cl = s[i]-x[i];
+        ll cr = t[i]-x[i];
+        auto l = lower_bound(all(d), cl) - d.begin();
+        auto r = lower_bound(all(d), cr) - d.begin();
+        seg.apply(l,r,x[i]);
+    }
+    rep(i,q) {int ans = seg.get(i); print(ans != iINF ? ans : -1);}
 }

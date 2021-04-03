@@ -18,21 +18,24 @@ template<class T> void print(const T &t) { cout << t << "\n"; }
 const ll INF = 1LL << 62;
 const int iINF = 1 << 30;
 
-int n;
-using vi = vector<int>;
+int q;
+ll n,a,b,c,d;
 
-template<class T> int LIS(vector<T> a,  bool is_strong = true) {
-    const T lINF = iINF; int N = sz(a); vector<T> dp(N, lINF);
-    rep(i,N) {
-        if (is_strong) *lower_bound(all(dp), a[i]) = a[i];
-        else *upper_bound(all(dp), a[i]) = a[i];
-    }
-    return lower_bound(all(dp), lINF) - dp.begin();
+ll dfs(ll n, ll tmp){
+    while(n%2==0) {tmp+=a; n/=2;}
+    while(n%3==0) {tmp+=b; n/=3;}
+    while(n%5==0) {tmp+=c; n/=5;}
+    if(n==1) return tmp;
+    ll res1 = dfs(n+1,tmp+d);
+    ll res2 = dfs(n-1,tmp+d);
+    return min(res1, res2);
 }
 
 int main() {
-    fio(); cin>>n;
-    vi a(n); fore(x,a) cin>>x;
-    reverse(all(a));
-    print(LIS(a,false));
+    fio(); cin>>q;
+    while(q--){
+        cin>>n>>a>>b>>c>>d;
+        ll ans = dfs(n,d);
+        print(ans);
+    }
 }
