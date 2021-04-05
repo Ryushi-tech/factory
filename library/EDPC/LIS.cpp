@@ -36,3 +36,4 @@ int main() {
     reverse(all(a));
     print(LIS(a,false));
 }
+//Sequence decomposition
