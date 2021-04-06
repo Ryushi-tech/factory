@@ -34,7 +34,6 @@ int main() {
                 nex[i][j] = nex[i + 1][j];
             }
     }
-    rep(i,n+2) {rep(j,26) {cerr<<nex[i][j]<<" ";} cerr<<endl;}
 
     string Answer = "";
     int CurrentPos = 0;

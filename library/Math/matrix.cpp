@@ -30,7 +30,8 @@ mat mat_mul(mat &a, mat &b) {
 
 mat mat_pow(mat a, ll n) {
     mat res(sz(a), vl(sz(a)));
-    rep(i,sz(a)) res[i][i] = (1LL<<32)-1;
+//    rep(i,sz(a)) res[i][i] = (1LL<<32)-1;
+    rep(i,sz(a)) res[i][i] = 1;
     while(n>0) {
         if(n&1) res = mat_mul(a, res);
         a = mat_mul(a, a);
