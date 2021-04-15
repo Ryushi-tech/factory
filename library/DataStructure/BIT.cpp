@@ -18,32 +18,39 @@ template<class T> void print(const T &t) { cout << t << "\n"; }
 const ll INF = 1LL << 62;
 const int iINF = 1 << 30;
 
-class BIT{
+template<typename T> class BIT {
+private:
+    int n;
+    vector<T> bit;
 public:
-    ll n; vector<ll> a;
-    BIT(ll n):n(n),a(n+1,0){}
-
-    void add(ll i,ll x){
-        i++; if(i==0) return;
-        for(ll k=i;k<=n;k+=(k&-k)) a[k]+=x;
+    void add(int i, T x){
+        i++;
+        while(i < n){
+            bit[i] += x, i += i & -i;
+        }
     }
 
-    ll sum(ll i,ll j) {return sum_sub(j)-sum_sub(i-1);}
-
-    ll sum_sub(ll i){
-        i++; ll s=0; if(i==0) return s;
-        for(ll k=i;k>0;k-=(k&-k)) s+=a[k];
+    T sum(int i){
+        i++; T s = 0;
+        while(i > 0){
+            s += bit[i], i -= i & -i;
+        }
         return s;
     }
 
-    ll lower_bound(ll x){
-        int sum=0, pos=0, ts=1, LOGN=0;
-        while(ts < n) {ts<<=1; LOGN++;}
-        rrep(i,LOGN) if(pos+(1<<i) < n and sum+a[pos+(1<<i)] < x) {
-                sum += a[pos+(1<<i)];
+    T lower_bound(T x){
+        T sum=0, pos=0, ts=1, ln=0;
+        while(ts < n) {ts<<=1; ln++;}
+        rrep(i,ln) if(pos+(1<<i) < n and sum+bit[pos+(1<<i)] < x) {
+                sum += bit[pos+(1<<i)];
                 pos += (1<<i);
-        }
+            }
         return pos;
+    }
+    BIT(){}
+    BIT(int l) : n(l+1), bit(n,0){}
+    BIT(const vector<T>& v) : n(sz(v)+1), bit(n,0){
+        rep(i,n-1) add(i,v[i]);
     }
 };
 
@@ -54,11 +61,11 @@ int main() {
     fio(); cin>>n;
     vi p(n), pos(n+1);
     rep(i,n) {cin>>p[i]; pos[p[i]]=i;}
-    BIT fw(n+1);
+    BIT<int> fw(n);
     ll ans=0;
     rrep1(i,n){
         fw.add(pos[i],1);
-        int s = fw.sum_sub(pos[i]);
+        int s = fw.sum(pos[i]);
         vi bound;
         vi dif = {-2,-1,1,2};
         fore(x, dif){
