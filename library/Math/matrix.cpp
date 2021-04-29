@@ -22,7 +22,7 @@ int k,m;
 using mat = vector<vl>;
 
 mat mat_mul(mat &a, mat &b) {
-    mat res(sz(a), vector<ll>(sz(b[0])));
+    mat res(sz(a), vl(sz(b[0])));
 //    rep(i,sz(a)) rep(j,sz(b[0])) rep(l,sz(b)) res[i][j] ^= a[i][l] & b[l][j];
     rep(i,sz(a)) rep(j,sz(b[0])) rep(l,sz(b)) res[i][j] += a[i][l] * b[l][j];
     return res;

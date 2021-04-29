@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
 
-import random
-# lim = pow(2, 10)
-n = random.randint(2, 100)
-print(1)
+import random, string
+
+def randomname(n):
+    return ''.join(random.choices(string.ascii_lowercase, k=n))
+
+lim = 5000
+n = random.randint(4, lim)
 print(n)
+for i in range(n):
+    d=random.randint(1,5000)
+    c=random.randint(1,5000)
+    s=random.randint(1,10000)
+    print(d,c,s)
 # m = random.randint(n, lim)
 # s = random.randint(1, n - 1)
 # t = random.randint(2, n)
@@ -28,11 +36,11 @@ print(n)
     #     tmp = ["."] * x + ["#"] * (w - x)
     # random.shuffle(tmp)
     # print("".join(tmp))
-tmp1 = [x for x in range(1,n+1)]
+# tmp1 = [x for x in range(1,n+1)]
 # tmp2 = [x for x in range(n)]
-random.shuffle(tmp1)
+# random.shuffle(tmp1)
 # random.shuffle(tmp2)
-print(" ".join(map(str, tmp1)))
+# print(" ".join(map(str, tmp1)))
 # for x, y in zip(tmp1, tmp2):
 #     print(x, y)
 
