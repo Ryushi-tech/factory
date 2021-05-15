@@ -12,44 +12,62 @@ using vl = vector<ll>;
 #define rall(x) x.rbegin(), x.rend()
 #define fio() cin.tie(nullptr);ios::sync_with_stdio(false);
 #define DEBUG_CTN(v) cerr<<#v<<":";for(auto itr=v.begin();itr!=v.end();itr++) cerr<<" "<<*itr; cerr<<endl
-template<class T> bool chmax(T &a, const T &b) {if (a<b) { a = b; return true; } return 0;}
-template<class T> bool chmin(T &a, const T &b) {if (a>b) { a = b; return true; } return 0;}
+template<class T> bool chmax(T &a, const T &b) {if (a<b) { a = b; return true; } return false;}
+template<class T> bool chmin(T &a, const T &b) {if (a>b) { a = b; return true; } return false;}
 template<class T> void print(const T &t) { cout << t << "\n"; }
 const ll INF = 1LL << 62;
 const int iINF = 1 << 30;
 
-string S;
-int K;
-int nex[100009][26];
+int max_num=30;
+ll ans=1,way=0;
+using vi = vector<int>;
+using Graph = vector<vi>;
 
-int main() {
-    cin >> S >> K;
-    int n = sz(S);
+Graph G(max_num);
+vi seen(max_num),color(max_num),v;
 
-    rep(i,26) nex[n][i] = n;
-    rrep(i,n) rep(j,26) {
-            if ((int)(S[i] - 'a') == j) {
-                nex[i][j] = i;
-            } else {
-                nex[i][j] = nex[i + 1][j];
-            }
+void dfs(int idx) {
+    if(idx==sz(v)) {way++; return;}
+    set<int> st;
+    st.insert(1);
+    st.insert(2);
+    st.insert(3);
+    fore(nv, G[v[idx]]) {
+        st.erase(color[nv]);
     }
-    rep(i,n+2) {rep(j,26) {cerr<<nex[i][j]<<" ";} cerr<<endl;}
-
-    string Answer = "";
-    int CurrentPos = 0;
-    rep1(i,K) rep(j,26) {
-            int NexPos = nex[CurrentPos][j];
-            int MaxPossibleLength = (n - NexPos - 1) + i;
-            if (MaxPossibleLength >= K) {
-                Answer += (char)('a' + j);
-                CurrentPos = NexPos + 1;
-                break;
-            }
+    fore(c,st){
+        color[v[idx]]=c;
+        dfs(idx+1);
+        color[v[idx]]=0;
     }
-
-    cout << Answer << endl;
-    return 0;
 }
 
-//Educational 90: No.6
+void dfs2(int now){
+    v.emplace_back(now);
+    seen[now]=1;
+    fore(to,G[now]){
+        if(seen[to]!=0) continue;
+        dfs2(to);
+    }
+}
+
+int n,m,a,b;
+
+int main() {
+    fio(); cin>>n>>m;
+    rep(i,m) {
+        cin>>a>>b;a--;b--;
+        G[a].emplace_back(b);
+        G[b].emplace_back(a);
+    }
+    rep(i,n) {
+        if(seen[i]!=0) continue;
+        v.resize(0);
+        dfs2(i);
+        way=0;
+        dfs(0);
+        ans*=way;
+    }
+    print(ans);
+}
+//RGB Coloring2
