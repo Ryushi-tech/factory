@@ -23,23 +23,25 @@ using mint = modint1000000007;
 using vm = vector<mint>;
 using vvm = vector<vm>;
 
-int max_n = 2e6 + 200;
-vm fact(max_n+1,1), inv(max_n+1,1);
+int max_n=2e6+200;
+vm fact(max_n+1,1),inv(max_n+1,1);
 
 void init() {
-    rep1(i,max_n) fact[i] = i * fact[i-1];
-    inv[max_n] = fact[max_n].inv();
-    rrep1(i,max_n) inv[i-1] = i * inv[i];
+    rep1(i,max_n) fact[i]=i*fact[i-1];
+    inv[max_n]=fact[max_n].inv();
+    rrep1(i,max_n) inv[i-1]=i*inv[i];
 }
 
-mint nCr(int a, int b){
-    if (a < b || a < 0 || b < 0) return 0;
-    return fact[a] * inv[b] * inv[a - b];
+mint nCr(int a,int b){
+    if(fact[2]==1) init();
+    if(a<b||a<0||b<0) return 0;
+    return fact[a]*inv[b]*inv[a-b];
 }
 
-mint nPr(int a, int b){
-    if (a < b || a < 0 || b < 0) return 0;
-    return fact[a] * inv[a - b];
+mint nPr(int a,int b){
+    if(fact[2]==1) init();
+    if (a<b||a<0||b<0) return 0;
+    return fact[a]*inv[a-b];
 }
 
 int main() {
