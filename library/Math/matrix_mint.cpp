@@ -22,11 +22,8 @@ const int iINF = 1 << 30;
 using namespace atcoder;
 using mint = modint1000000007;
 using vm = vector<mint>;
-using vi = vector<int>;
-
-int n,m,x,y;
-ll k,a;
 using mat = vector<vm>;
+using vi = vector<int>;
 
 mat mat_mul(mat &a, mat &b) {
     mat res(sz(a), vm(sz(b[0])));
@@ -46,6 +43,9 @@ mat mat_pow(mat a, ll n) {
     }
     return res;
 }
+
+int n,m,x,y;
+ll k,a;
 
 int main() {
     fio(); cin>>n>>m>>k;
