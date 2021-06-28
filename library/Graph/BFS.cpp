@@ -42,16 +42,16 @@ vector<int> BFS(const Graph &G, int s) {
     return dist;
 }
 
-int main() {
-    int n,m;
-    cin>>n>>m;
+int n,m,a,b;
 
+int main() {
+    fio(); cin>>n>>m;
     Graph G(n);
+
     rep(i,m) {
-        int a,b;a--;b--;
-        cin>>a>>b;
-        G[a].push_back(b);
-        G[b].push_back(a);
+        cin>>a>>b;a--;b--;
+        G[a].emplace_back(b);
+        G[b].emplace_back(a);
     }
 
     vector<int> dist=BFS(G,0);
