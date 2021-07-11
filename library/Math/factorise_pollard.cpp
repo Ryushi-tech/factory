@@ -20,7 +20,7 @@ template<class T> void PRINT(const T &t) {rep(i,sz(t)) cout<<t[i]<<" \n"[i==sz(t
 const ll INF = 1LL << 62;
 const int iINF = 1 << 30;
 
-typedef unsigned long long ull;
+using ull = unsigned long long;
 ull modmul(ull a, ull b, ull M) {
     ll ret = a * b - M * ull(1.L / M * a * b);
     return ret + M * (ret < 0) - M * (ret >= (ll)M);
