@@ -17,58 +17,52 @@ template<class T> bool chmax(T &a, const T &b) {if (a<b) {a = b; return 1;} retu
 template<class T> bool chmin(T &a, const T &b) {if (a>b) {a = b; return 1;} return 0;}
 template<class T> void print(const T &t) {cout<<t<<"\n";}
 template<class T> void PRINT(const T &t) {rep(i,sz(t)) cout<<t[i]<<" \n"[i==sz(t)-1];}
-template<class T> void PMINT(const T &t) {rep(i,sz(t)) cout<<t[i].val()<<" \n"[i==sz(t)-1];}
 const ll INF = 1LL << 62;
 const int iINF = 1 << 30;
 
 #include<atcoder/all>
 using namespace atcoder;
-using mint=modint;
+using mint=modint1000000007;
 using vm=vector<mint>;
 
-vm lagrange_interpolation(vm x,vm y){
-    int n=sz(x)-1;
-    rep(i,n+1){
+mint lagrange_interpolation(vm x, vm y, mint T) {
+    const ll n=sz(x)-1;
+    mint ret=0;
+    rep(i,n+1) {
         mint t=1;
-        rep(j,n+1)if(i!=j)t*=x[i]-x[j];
-        y[i]*=t.inv();
-    }
-    ll cur=0,nxt=1;
-    vector dp(2,vm(n+2));
-    dp[0][0]=-x[0];dp[0][1]=1;
-    rep1(i,n){
-        rep(j,n+2){
-            dp[nxt][j]=-dp[cur][j]*x[i];
-            if(j)dp[nxt][j]+=dp[cur][j-1];
+        rep(j,n+1) {
+            if(i==j) continue;
+            t*=(T-x[j])*(x[i]-x[j]).inv();
         }
-        swap(nxt,cur);
+        ret+=t*y[i];
     }
-    vm res(n+1);
-    rep(i,n+1){
-        if(y[i]==0)continue;
-        if(x[i]==0)rep(j,n+1)res[j]+=dp[cur][j+1]*y[i];
-        else{
-            mint dx=x[i].inv();
-            res[0]-=dp[cur][0]*dx*y[i];
-            mint tmp=-dp[cur][0]*dx;
-            rep1(j,n){
-                res[j]-=(dp[cur][j]-tmp)*dx*y[i];
-                tmp=-(dp[cur][j]-tmp)*dx;
-            }
-        }
-    }
-    return res;
+    return ret;
 }
 
-int p;
+mint lagrange_interpolate_arithmetic(mint a, mint d,vm y, mint T) {
+    const ll n=sz(y)-1;
+    mint ret=0,ft=1;
+    rep(i,n+1) ft*=T-(a+d*i);
+    mint f=1;
+    rep1(i,n) f*=-1*i*d;
+    ret+=y[0]*f.inv()*ft*(T-a).inv();
+    rep(i,n){
+        f*=d*(i+1)*(d*(i-n)).inv();
+        ret+=y[i+1]*f.inv()*ft*(T-a-d*(i+1)).inv();
+    }
+    return ret;
+}
+
+ll n,t;
 
 int main() {
-    fio(); cin>>p;
-    mint::set_mod(p);
-    vm x(p),y(p);
-    rep(i,p) {int z; cin>>z; y[i]=z;}
-    rep(i,p) x[i]=i;
-    vm res=lagrange_interpolation(x,y);
-    PMINT(res);
+    fio(); cin>>n;
+    vm a(n+1);
+    rep(i,n+1) {int z; cin>>z; a[i]=z;}
+    cin>>t;
+    vm x(n+1); rep(i,n+1) x[i]=i;
+//    auto ans=lagrange_interpolation(x,a,t);
+    auto ans=lagrange_interpolate_arithmetic(0,1,a,t);
+    print(ans.val());
 }
-//polynomial construction
+//見たことのない多項式
