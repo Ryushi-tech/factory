@@ -25,32 +25,26 @@ using namespace atcoder;
 using mint=modint1000000007;
 using vm=vector<mint>;
 
-mint lagrange_interpolation(vm x, vm y, mint T) {
-    const ll n=sz(x)-1;
-    mint ret=0;
-    rep(i,n+1) {
-        mint t=1;
-        rep(j,n+1) {
-            if(i==j) continue;
-            t*=(T-x[j])*(x[i]-x[j]).inv();
-        }
-        ret+=t*y[i];
-    }
-    return ret;
+int max_n=3e6+300;
+vm fact(max_n+1,1),inv(max_n+1,1);
+
+void init() {
+    rep1(i,max_n) fact[i]=i*fact[i-1];
+    inv[max_n]=fact[max_n].inv();
+    rrep1(i,max_n) inv[i-1]=i*inv[i];
 }
 
-mint lagrange_interpolate_arithmetic(mint a, mint d,vm y, mint T) {
-    const ll n=sz(y)-1;
-    mint ret=0,ft=1;
-    rep(i,n+1) ft*=T-(a+d*i);
-    mint f=1;
-    rep1(i,n) f*=-1*i*d;
-    ret+=y[0]*f.inv()*ft*(T-a).inv();
-    rep(i,n){
-        f*=d*(i+1)*(d*(i-n)).inv();
-        ret+=y[i+1]*f.inv()*ft*(T-a-d*(i+1)).inv();
+mint lagrange_interpolation(vm y, mint val) {
+    if(fact[2]==1) init();
+    int N=sz(y)-1;
+    vm R(N+1,1);
+    rrep1(i,N) R[i-1]=R[i]*(val-i);
+    mint res=0,L=1;
+    rep(i,N+1) {
+        res+=y[i]*L*R[i]*inv[i]*inv[N-i]*mint((N-i)&1 ? -1:1);
+        L*=val-i;
     }
-    return ret;
+    return res;
 }
 
 ll n,t;
@@ -61,8 +55,7 @@ int main() {
     rep(i,n+1) {int z; cin>>z; a[i]=z;}
     cin>>t;
     vm x(n+1); rep(i,n+1) x[i]=i;
-//    auto ans=lagrange_interpolation(x,a,t);
-    auto ans=lagrange_interpolate_arithmetic(0,1,a,t);
+    auto ans=lagrange_interpolation(a,t);
     print(ans.val());
 }
 //見たことのない多項式
