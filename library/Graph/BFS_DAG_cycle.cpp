@@ -24,6 +24,41 @@ using Graph = vector<vector<int>>;
 using vi = vector<int>;
 
 int n,m,a,b;
+int ans=iINF;
+vi cnd;
+
+void BFS(const Graph &G, int s) {
+    vi dist(n,-1),prev(n,-1);
+    dist[s]=0;
+    queue<int> que;
+    que.push(s);
+    bool flg=false;
+    while(!que.empty() and !flg) {
+        int v=que.front(); que.pop();
+        fore(nv,G[v]) {
+            if(nv==s){
+                int siz=dist[v]+1;
+                if(siz<ans){
+                    ans=siz;
+                    cnd.clear();
+                    while(v!=s){
+                        cnd.emplace_back(v);
+                        v=prev[v];
+                    }
+                    cnd.emplace_back(v);
+                }
+                flg=true;
+                break;
+            }
+            else if (dist[nv]!=-1) continue;
+            else{
+                dist[nv]=dist[v]+1;
+                prev[nv]=v;
+                que.push(nv);
+            }
+        }
+    }
+}
 
 int main() {
     fio(); cin>>n>>m;
@@ -32,39 +67,7 @@ int main() {
         cin>>a>>b;a--;b--;
         G[a].emplace_back(b);
     }
-    int ans=iINF;
-    vi cnd;
-    rep(s,n) {
-        vi dist(n,-1),prev(n,-1);
-        dist[s]=0;
-        queue<int> que;
-        que.push(s);
-        bool flg=false;
-        while(!que.empty() and !flg) {
-            int v=que.front(); que.pop();
-            fore(nv,G[v]) {
-                if(nv==s){
-                    int siz=dist[v]+1;
-                    if(siz<ans){
-                        ans=siz;
-                        cnd.clear();
-                        while(v!=s){
-                            cnd.emplace_back(v);
-                            v=prev[v];
-                        }
-                        cnd.emplace_back(v);
-                    }
-                    flg=true;
-                    break;
-                }
-                else if (dist[nv]==-1){
-                    dist[nv]=dist[v]+1;
-                    prev[nv]=v;
-                    que.push(nv);
-                }
-            }
-        }
-    }
+    rep(s,n) BFS(G,s);
     if(ans==iINF) print(-1);
     else{
         print(sz(cnd));
