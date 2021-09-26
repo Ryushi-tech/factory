@@ -22,17 +22,17 @@ const int iINF = 1 << 30;
 template<class T> struct CumulativeSum2D{
     vector<vector<T>> data;
     CumulativeSum2D(int H,int W): data(H+1,vector<T>(W+1,0)){}
-    void add(int y,int x,ll value){
-        ++x; ++y;
-        if(y>=sz(data) || x>=sz(data[0])) return;
-        data[y][x]+=value;
+    void add(int h,int w,ll val){
+        h++; w++;
+        if(h>=sz(data) || w>=sz(data[0])) return;
+        data[h][w]+=val;
     }
     void build(){
-        int h=sz(data)-1, w=sz(data[0])-1;
-        rep(i,h) rep(j,w) data[i+1][j+1]+=data[i][j+1]+data[i+1][j]-data[i][j];
+        int lh=sz(data)-1, lw=sz(data[0])-1;
+        rep(h,lh) rep(w,lw) data[h+1][w+1]+=data[h][w+1]+data[h+1][w]-data[h][w];
     }
-    ll query(int sy,int sx,int gy,int gx){
-        return data[gy+1][gx+1]-data[sy][gx+1]-data[gy+1][sx]+data[sy][sx];
+    ll query(int sh,int sw,int gh,int gw){
+        return data[gh+1][gw+1]-data[sh][gw+1]-data[gh+1][sw]+data[sh][sw];
     }
 };
 
