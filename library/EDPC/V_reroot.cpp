@@ -22,7 +22,7 @@ const int iINF = 1 << 30;
 
 #include<atcoder/all>
 using namespace atcoder;
-using mint = modint998244353;
+using mint = modint;
 using vm = vector<mint>;
 
 int n,mod;
