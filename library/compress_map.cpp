@@ -1,10 +1,7 @@
 #include<bits/stdc++.h>
-#include<atcoder/all>
 using namespace std;
-using namespace atcoder;
 using ll = long long;
 using vl = vector<ll>;
-using vi = vector<int>;
 #define rep(i,n) for(int i=0;i<(n);i++)
 #define rrep(i,n) for(int i=(n)-1;i>=0;i--)
 #define rep1(i,n) for(int i=1;i<=(n);i++)
@@ -23,32 +20,32 @@ template<class T> void PRINT(const T &t) {rep(i,sz(t)) cout<<t[i]<<" \n"[i==sz(t
 const ll INF = 1LL << 62;
 const int iINF = 1 << 30;
 
+#include<atcoder/all>
+using namespace atcoder;
+using mint = modint998244353;
+
 int n;
 
-void compress(vi &v){
-    vi x=v;
-    sort(all(x));
-    x.erase(unique(all(x)),x.end());
-    fore(y,v) y=lower_bound(all(x),y)-x.begin();
-}
-
 int main() {
-    fio(); cin>>n;
-    vi a(n),b(n);
-    fore(x,a) cin>>x;
-    fore(x,b) cin>>x;
-    compress(a); compress(b);
-    vector<pair<int,int>> ab(n);
-    rep(i,n) ab[i]={a[i],b[i]};
-    sort(all(ab));
-    fenwick_tree<int> bi(n);
-    ll ans=0;
+    fio();cin>>n;
+
+//    compress
+    vector<int> a(n); set<int> s;
+    rep(i,n) cin>>a[i],s.insert(a[i]);
+    map<int,int> p;
+    int idx=0;
+    fore(x,s) p[x]=idx,idx++;
+//
+
+    int m=sz(s);
+    fenwick_tree<mint> bit(m+1);
+    vector<mint> two(n+1,1);
+    rep(i,n) two[i+1]=two[i]*2;
+    mint ans=0;
     rep(i,n){
-        auto le=i;
-        while(i+1<n and ab[i].first==ab[i+1].first) i++;
-        for(int j=le;j<=i;j++) bi.add(ab[j].second,1);
-        for(int j=le;j<=i;j++) ans+=bi.sum(ab[j].second,n);
+        ans+=two[i]*bit.sum(0,p[a[i]]+1);
+        bit.add(p[a[i]],two[i+1].inv());
     }
-    print(ans);
+    print(ans.val());
 }
-//jealous two
+//LEQ
