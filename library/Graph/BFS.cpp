@@ -2,6 +2,7 @@
 using namespace std;
 using ll = long long;
 using vl = vector<ll>;
+using vi = vector<int>;
 #define rep(i,n) for(int i=0;i<(n);i++)
 #define rrep(i,n) for(int i=(n)-1;i>=0;i--)
 #define rep1(i,n) for(int i=1;i<=(n);i++)
@@ -20,20 +21,16 @@ template<class T> void PRINT(const T &t) {rep(i,sz(t)) cout<<t[i]<<" \n"[i==sz(t
 const ll INF = 1LL << 62;
 const int iINF = 1 << 30;
 
-using Graph = vector<vector<int>>;
+using Graph = vector<vi>;
+Graph G;
 
-vector<int> BFS(const Graph &G, int s) {
-    int n = sz(G);
-    vector<int> dist(n,-1);
-    queue<int> que;
-
-    dist[s]=0;
-    que.push(s);
-
-    while(!que.empty()) {
-        int v=que.front();
-        que.pop();
-        fore(nv,G[v]) {
+vi bfs(int s){
+    int n=sz(G);
+    vi dist(n,-1);queue<int> que;
+    dist[s]=0;que.push(s);
+    while(!que.empty()){
+        int v=que.front(); que.pop();
+        fore(nv,G[v]){
             if (dist[nv]!=-1) continue;
             dist[nv]=dist[v]+1;
             que.push(nv);
@@ -44,16 +41,14 @@ vector<int> BFS(const Graph &G, int s) {
 
 int n,m,a,b;
 
-int main() {
-    fio(); cin>>n>>m;
-    Graph G(n);
-
-    rep(i,m) {
+int main(){
+    fio();cin>>n>>m;
+    G.resize(n);
+    rep(i,m){
         cin>>a>>b;a--;b--;
         G[a].emplace_back(b);
         G[b].emplace_back(a);
     }
-
-    vector<int> dist=BFS(G,0);
+    vector<int> dist=bfs(0);
     rep(i,n) print(dist[i]);
 }
