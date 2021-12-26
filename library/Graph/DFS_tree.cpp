@@ -4,22 +4,22 @@ using namespace std;
 #define rep(i, n) for (int i = 0; i < (int) (n); i++)
 template<class T> void print(const T& t){ cout << t << "\n"; }
 
-int max_num = 101010;
-using vi = vector<int>;
-using Graph = vector<vi>;
+int max_num=101010;
+using vi=vector<int>;
+using Graph=vector<vi>;
 Graph G(max_num);
 vi depth(max_num), subtree_size(max_num), cnt(max_num), color(max_num);
 vector<bool> good(max_num);
 
-void dfs(int v, int p = -1, int d = 0) {
+void dfs(int v,int p=-1,int d=0) {
     if(cnt[color[v]]==0) good[v]=true;
     cnt[color[v]]++;
-    depth[v] = d;
-    subtree_size[v] = 1;
-    fore(nv, G[v]) {
-        if (nv == p) continue;
-        dfs(nv, v, d+1);
-        subtree_size[v] += subtree_size[nv];
+    depth[v]=d;
+    subtree_size[v]=1;
+    fore(nv,G[v]) {
+        if(nv==p) continue;
+        dfs(nv,v,d+1);
+        subtree_size[v]+=subtree_size[nv];
     }
     cnt[color[v]]--;
 }
