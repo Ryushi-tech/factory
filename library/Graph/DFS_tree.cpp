@@ -1,8 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-#define rep(i, n) for (int i = 0; i < (int) (n); i++)
-template<class T> void print(const T& t){ cout << t << "\n"; }
+#define rep(i,n) for (int i=0;i<(int)(n);i++)
+template<class T> void print(const T& t){cout<<t<<"\n"; }
 
 int max_num=101010;
 using vi=vector<int>;
