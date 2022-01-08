@@ -23,21 +23,21 @@ private:
     int n;
     vector<T> bit;
 public:
-    void add(int i, T x){
+    void add(int i,T x){
         i++;
-        while(i < n){
-            bit[i] += x, i += i & -i;
+        while(i<n){
+            bit[i]+=x;
+            i+=i&-i;
         }
     }
-
     T sum(int i){
-        i++; T s = 0;
-        while(i > 0){
-            s += bit[i], i -= i & -i;
+        i++; T s=0;
+        while(i>0){
+            s+=bit[i];
+            i-=i&-i;
         }
         return s;
     }
-
     T lower_bound(T x){
         T sum=0, pos=0, ts=1, ln=0;
         while(ts < n) {ts<<=1; ln++;}
