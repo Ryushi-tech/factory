@@ -1,11 +1,11 @@
 #include<bits/stdc++.h>
 using namespace std;
+using vi=vector<int>;
 
 #define rep(i,n) for (int i=0;i<(int)(n);i++)
 template<class T> void print(const T& t){cout<<t<<"\n"; }
 
 int max_num=101010;
-using vi=vector<int>;
 using Graph=vector<vi>;
 Graph G(max_num);
 vi depth(max_num), subtree_size(max_num), cnt(max_num), color(max_num);
