@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 contest=abc
-num=197
+num=233
 
 home=/Users/ryushi/CLionProjects/factory/
 base=https://atcoder.jp/contests/${contest}${num}/tasks/${contest}${num}_
@@ -11,8 +11,9 @@ var2=${base}b
 var3=${base}c
 var4=${base}d
 var5=${base}e
+var6=${base}f
 
-rm -rf ${home}A/test ${home}B/test ${home}C/test ${home}D/test ${home}E/test
+rm -rf ${home}A/test ${home}B/test ${home}C/test ${home}D/test ${home}E/test ${home}F/test
 
 cd ${home}A || exit
 oj d $var1
@@ -24,5 +25,7 @@ cd ${home}D || exit
 oj d $var4
 cd ${home}E || exit
 oj d $var5
+cd ${home}F || exit
+oj d $var6
 
 cd ${home} || exit

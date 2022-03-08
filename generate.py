@@ -5,26 +5,21 @@ import random, string
 def randomname(n):
     return ''.join(random.choices(string.ascii_lowercase, k=n))
 
-lim = 5000
+lim = 100
 n = random.randint(4, lim)
+a = random.randint(-1000,1000)
+b = random.randint(-1000,1000)
+c = random.randint(-1000,1000)
+d = random.randint(-1000,1000)
+print(a,b,c,d)
 print(n)
 for i in range(n):
-    d=random.randint(1,5000)
-    c=random.randint(1,5000)
-    s=random.randint(1,10000)
-    print(d,c,s)
-# m = random.randint(n, lim)
-# s = random.randint(1, n - 1)
-# t = random.randint(2, n)
-# m = random.randint(2, 2 + n // 300)
-# print(n, m, s, t)
-# print(s, random.randint(s + 1, n))
-# print(random.randint(1, t-1), t)
+    e = random.randint(-1000,1000)
+    f = random.randint(-1000,1000)
+    print(e,f)
 # for i in range(m - 2):
 #     x, y = random.sample(range(1, n), k=2)
 #     print(x, y)
-# print(0,0,0,0)
-# print(n)
 # for i in range(h):
 #     print(i, i + random.randint(1, 3))
     # x = random.randint(0, w)
@@ -43,11 +38,3 @@ for i in range(n):
 # print(" ".join(map(str, tmp1)))
 # for x, y in zip(tmp1, tmp2):
 #     print(x, y)
-
-# tmp = []
-# start = 1
-# for _ in range(k):
-#     v = random.randint(start, start + 20)
-#     w = random.randint(v, v + 20)
-#     start = w
-#     print(v, w)
