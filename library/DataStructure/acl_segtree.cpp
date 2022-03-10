@@ -5,13 +5,8 @@ using namespace std;
 using namespace atcoder;
 #define rep(i, n) for (int i = 0; i < (int) (n); i++)
 
-int op(int a, int b) {
-    return max(a, b);
-    }
-
-int e() {
-    return -1;
-    }
+int op(int a, int b) {return max(a, b);}
+int e() {return -1;}
 
 int target;
 
