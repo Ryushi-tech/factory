@@ -21,9 +21,10 @@ const int iINF = 1 << 30;
 ll A,B,K;
 vector<vl> memo(61,vl(61,-1));
 ll nCr(ll a, ll b){
+    if(a<b) return 0;
     if(b==0 or a==b) return 1;
     if(0<=memo[a][b]) return memo[a][b];
-    return memo[a][b]= nCr(a-1,b-1)+ nCr(a-1,b);
+    return memo[a][b]=nCr(a-1,b-1)+nCr(a-1,b);
 }
 
 int main() {
