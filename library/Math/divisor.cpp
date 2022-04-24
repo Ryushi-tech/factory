@@ -19,10 +19,10 @@ const ll INF = 1LL << 60;
 
 vl enum_divisors(ll N) {
     vl res;
-    for (ll i = 1; i * i <= N; ++i) {
-        if (N % i == 0) {
+    for(ll i=1; i*i<=N;++i) {
+        if(N%i==0) {
             res.push_back(i);
-            if (N/i != i) res.push_back(N/i);
+            if(N/i!=i) res.push_back(N/i);
         }
     }
     sort(all(res));
