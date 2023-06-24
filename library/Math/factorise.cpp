@@ -18,10 +18,10 @@ template<class T> void chmax(T &a, const T &b) { if (a < b) a = b; }
 template<class T> void print(const T &t) { cout << t << "\n"; }
 const ll INF = 1LL << 60;
 
-template <class Z> map<Z, int> factorize(Z n) {
-    map<Z, int> res;
-    for (Z i = 2; i * i <= n; ++i) while (n % i == 0) ++res[i], n /= i;
-    if (n != 1) ++res[n];
+template <class Z> map<Z,int> factorize(Z n){
+    map<Z,int> res;
+    for(Z i=2;i*i<=n;++i) while(n%i==0) ++res[i],n/=i;
+    if(n!=1) ++res[n];
     return res;
 }
 
